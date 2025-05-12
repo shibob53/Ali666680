@@ -22,8 +22,8 @@ echo ">> تثبيت Chrome الخاص بـ Puppeteer"
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then
 echo "...Copying Puppeteer Cache from Build Cache"
 # Copying from the actual path where Puppeteer stores its Chrome binary
-cp -R /opt/render/project/src/chrome/linux-136.0.7103.92/chrome-linux64/chrome $PUPPETEER_CACHE_DIR
+cp -R /opt/render/project/src/chrome/linux-136.0.7103.92/chrome-linux64/chrome/ $PUPPETEER_CACHE_DIR
 else
 echo "...Storing Puppeteer Cache in Build Cache"
-cp -R $PUPPETEER_CACHE_DIR /opt/render/project/src/chrome/linux-136.0.7103.92/chrome-linux64/chrome
+cp -R $PUPPETEER_CACHE_DIR /opt/render/project/src/chrome/linux-136.0.7103.92/chrome-linux64/chrome/
 fi
