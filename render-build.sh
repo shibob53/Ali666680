@@ -16,7 +16,8 @@ echo ">> التأكد من وجود مجلد الكاش: $PUPPETEER_CACHE_DIR"
 mkdir -p "$PUPPETEER_CACHE_DIR"
 
 echo ">> تثبيت Chrome الخاص بـ Puppeteer"
-npx puppeteer browsers install chrome
+#npx puppeteer browsers install chrome
+npx @puppeteer/browsers install chrome@136.0.7103.92
 
 # نقل أو نسخ الكاش بين build cache و Puppeteer cache
 if [[ ! -d "$PUPPETEER_CACHE_DIR" ]]; then
