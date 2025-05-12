@@ -7,7 +7,8 @@
     "start": "node dist/src/index.js",
     "dev": "nodemon --watch src --ext ts --exec \"npm run build && npm start\"",
     "typeorm": "typeorm-ts-node-commonjs",
-    "db:seed": "node dist/src/database/seed.js"
+    "db:seed": "node dist/src/database/seed.js", 
+    "postinstall": "npx puppeteer browsers install chrome"
   },
   "keywords": [],
   "author": "Fathi Helmi",
