@@ -1,23 +1,30 @@
-#!/usr/bin/env bash
-# exit on errorset -o errexit
+#!/bin/bash
 
-npm install
-npm run build # uncomment if required
+echo ">> بدء تثبيت Chrome عبر Puppeteer"
 
-# Store/pull Puppeteer cache with build cache
+# 1. تحديد مسار الكاش المطلوب
+PUPPETEER_CACHE_DIR="/opt/render/.cache/puppeteer"
+mkdir -p "$PUPPETEER_CACHE_DIR"
 
+# 2. تثبيت Chrome بواسطة Puppeteer
+npx @puppeteer/browsers install chrome@136.0.7103.92
 
-#!/usr/bin/env bash
-set -e
+# 3. البحث عن مجلد Chrome داخل كاش Puppeteer
+echo ">> البحث عن مجلد Chrome داخل كاش Puppeteer..."
+ACTUAL_CACHE=$(find $HOME -type d -path "*/puppeteer/chrome" 2>/dev/null | head -n 1)
 
-#npm install
-# npm run build # uncomment if required
+if [[ -z "$ACTUAL_CACHE" ]]; then
+  echo "❌ لم يتم العثور على مجلد Chrome الخاص بـ Puppeteer."
+  exit 1
+fi
 
-# Store/pull Puppeteer cache with build cache
-if [[ ! -d "$PUPPETEER_CACHE_DIR" ]]; then 
-  echo "...Copying Puppeteer Cache from Build Cache" 
-  cp -R "$XDG_CACHE_HOME/puppeteer/" "$PUPPETEER_CACHE_DIR"
-else 
-  echo "...Storing Puppeteer Cache in Build Cache" 
-  cp -R "$PUPPETEER_CACHE_DIR" "$XDG_CACHE_HOME"
+echo "✅ تم العثور على Chrome في: $ACTUAL_CACHE"
+
+# 4. إدارة الكاش بين مراحل البناء
+if [[ ! -d "$PUPPETEER_CACHE_DIR" ]]; then
+  echo "...نسخ كاش Puppeteer من مجلد المشروع إلى $PUPPETEER_CACHE_DIR"
+  cp -R "$ACTUAL_CACHE" "$PUPPETEER_CACHE_DIR"
+else
+  echo "...حفظ كاش Puppeteer في مجلد المشروع"
+  cp -R "$PUPPETEER_CACHE_DIR" "$ACTUAL_CACHE"
 fi
